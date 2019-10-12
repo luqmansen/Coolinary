@@ -65,3 +65,23 @@ var CancelOrder = func(w http.ResponseWriter, r *http.Request) {
 	utils.Respond(w, resp)
 
 }
+
+var SkipToday = func(w http.ResponseWriter, r *http.Request) {
+
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+
+	userID := r.Context().Value("user").(uint)  //Grab the Id of order creator
+	order := &models.Order{}
+
+	err = json.NewDecoder(r.Body).Decode(order)
+	if err != nil {
+		utils.Respond(w, utils.Message(http.StatusBadRequest, "Error while request body"))
+		return
+	}
+
+	order.BuyerID = userID
+	resp, _ := order.SkipToday(uint(id))
+	utils.Respond(w, resp)
+
+}

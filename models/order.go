@@ -20,6 +20,7 @@ type Order struct {
 	SellerID     uint `gorm:"REFERENCES sellers(id)";json:"seller_id"`
 	BuyerID      uint `gorm:"REFERENCES users(id)" json:"buyer_id"`
 	DeliveryTime string `json:"delivery_time"`
+	DeliverToday bool `json:"deliver_today"`
 	Subscription bool   `json:"subscription"`
 	TotalPrice uint32 `json:"total_price"`
 	Paid         bool   `json:"paid"`
@@ -74,7 +75,10 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool){
 
 func (order *Order) PayOrder(orderID uint) (map[string]interface{}, bool){
 
-	//order := &Order{}
+	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
+		return u.Message(http.StatusNotFound, "Order Not Found"), false
+	}
+
 	err := GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).First(order).Error
 	if err != nil {
 		fmt.Println(err)}
@@ -82,10 +86,6 @@ func (order *Order) PayOrder(orderID uint) (map[string]interface{}, bool){
 		return u.Message(http.StatusOK, "Order Already Paid"), true
 	}
 
-
-	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
-		return u.Message(http.StatusNotFound, "Order Not Found"), false
-	}
 
 
 	err =  GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).Update("paid","true").Error
@@ -105,7 +105,10 @@ func (order *Order) PayOrder(orderID uint) (map[string]interface{}, bool){
 
 func (order *Order) CancelOrder(orderID uint) (map[string]interface{}, bool){
 
-	//order := &Order{}
+	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
+		return u.Message(http.StatusNotFound, "Order Not Found"), false
+	}
+
 	err := GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).First(order).Error
 	if err != nil {
 		fmt.Println(err)}
@@ -113,9 +116,7 @@ func (order *Order) CancelOrder(orderID uint) (map[string]interface{}, bool){
 		return u.Message(http.StatusOK, "Order Already Paid, Can't Be Cancelled"), true
 	}
 
-	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
-		return u.Message(http.StatusNotFound, "Order Not Found"), false
-	}
+
 
 	//This is soft delete, the vale "DeletedAt" will be set to current time
 	err =  GetDB().Debug().Table("orders").Where("id = ?", orderID).Delete(order).Error
@@ -131,6 +132,38 @@ func (order *Order) CancelOrder(orderID uint) (map[string]interface{}, bool){
 	order.DeletedAt = &now
 
 	resp := u.Message(http.StatusOK, "Order Canceled")
+	resp["order"] = order
+	return resp, true
+
+}
+
+func (order *Order) SkipToday(orderID uint) (map[string]interface{}, bool){
+
+	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
+		return u.Message(http.StatusNotFound, "Order Not Found"), false
+	}
+
+	err := GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).First(order).Error
+	if err != nil {
+		fmt.Println(err)}
+	if order.Paid == false{
+		return u.Message(http.StatusOK, "Pay The Bill First"), true
+	}
+
+
+	err =  GetDB().Debug().Select("deliver_today").Table("orders").Where("id = ?", orderID).Update("deliver_today","false").Error
+	if err != nil {
+		fmt.Println(err)
+	}
+	order.ID = orderID
+	order.DeliveryTime = order.DeliveryTime
+	order.DeliverToday = false
+	order.SellerID = order.SellerID
+	order.TotalPrice = order.TotalPrice
+	order.Subscription = order.Subscription
+
+	t :=  time.Now().AddDate(0,0,+1)
+	resp := u.Message(http.StatusOK, "Order will be sent at at "+ t.String())
 	resp["order"] = order
 	return resp, true
 

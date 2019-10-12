@@ -166,6 +166,32 @@ Response Example if Order Already Paid
     "status": 200
 }
 ```
+
+POST ``api/user/order/delete/{id}``
+
+Endpoints to user for skip the order delivery for today
+
+Success Response Example
+```json
+{
+    "message": "Order will be sent at 2019-10-13 10:21:12.858538824 +0700 WIB",
+    "order": {
+        "ID": 1,
+        "CreatedAt": "2019-10-12T10:19:47.324702+07:00",
+        "UpdatedAt": "2019-10-12T10:19:47.324702+07:00",
+        "DeletedAt": null,
+        "product_id": 1,
+        "SellerID": 1,
+        "buyer_id": 2,
+        "delivery_time": "13.00",
+        "deliver_today": false,
+        "subscription": true,
+        "total_price": 600000,
+        "paid": true
+    },
+    "status": 200
+}
+```
 ***
 ### Seller
 
