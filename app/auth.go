@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	models2 "github.com/luqmansen/Coolinary/models"
-	"github.com/luqmansen/hanako/utils"
+	"github.com/luqmansen/Coolinary/utils"
+
 	"net/http"
 	"os"
 	"strings"
