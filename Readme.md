@@ -72,17 +72,17 @@ Success Response Example
 
 POST ``api/user/new``
 
-Endpoints to create new user
+Endpoints to create new seller
 
 Post parameters
 
 | Property | Type | Description |
 | --- | --- | --- |
-| name | string | Name of the user |
+| name | string | Name of the seller |
 | store_name | string | Name of the store |
-| email | string | User email |
-| address | string | User Address |
-| password | string | User password |
+| email | string | seller email |
+| address | string | seller Address |
+| password | string | seller password |
 
 Success Response Example
 ```json
@@ -106,14 +106,14 @@ Success Response Example
 
 POST ``api/seller/login``
 
-Endpoints to login for user
+Endpoints to login for seller
 
 Post parameters
 
 | Property | Type | Description |
 | --- | --- | --- |
-| email | string | User email |
-| password | string | User password |
+| email | string | account email |
+| password | string | account password |
 
 Success Response Example
 ```json
@@ -130,6 +130,38 @@ Success Response Example
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjF9.VOEQc2pqr74vB_44g73RF5gTWQzcWwQWh9Cs4YOZbkg"
     },
     "message": "Logged In",
+    "status": 200
+}
+```
+
+
+POST ``api/seller/product/new``
+
+Endpoints to create new product for seller
+
+Post parameters
+
+| Property | Type | Description |
+| --- | --- | --- |
+| product_name | string | Product Name |
+| price | uint32 |  Product price |
+| selling_area | string |  Product selling area |
+
+Success Response Example
+```json
+
+{
+    "message": "New Product Added",
+    "product": {
+        "ID": 1,
+        "CreatedAt": "2019-10-12T07:59:43.36179584+07:00",
+        "UpdatedAt": "2019-10-12T07:59:43.36179584+07:00",
+        "DeletedAt": null,
+        "product_name": "Gudeg Jogja",
+        "seller_id": 1,
+        "price": 20000,
+        "selling_area": "Semarang"
+    },
     "status": 200
 }
 ```

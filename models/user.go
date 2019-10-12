@@ -121,8 +121,6 @@ func GetUser(u uint) *User {
 	return user
 }
 
-//func CreateOrder()
-
 //func PayOrder(id string) (map[string]interface{}, bool){
 //
 //}
