@@ -60,10 +60,12 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool){
 	var now = time.Now()
 	if now.Hour() < TIME_BREAKFAST{
 		order.DeliveryTime = "08.00"
+		order.DeliverToday = true
 	} else if now.Hour() <TIME_LAUNCH{
 		order.DeliveryTime = "13.00"
+		order.DeliverToday = true
 	} else {
-		order.DeliveryTime = "Tomorrow"
+		order.DeliverToday = false
 	}
 
 	GetDB().Create(order)
