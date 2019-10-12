@@ -30,6 +30,6 @@ var AuthenticateSeller = func(w http.ResponseWriter, r *http.Request) {
 		u.Respond(w, u.Message(http.StatusBadRequest, app.InvalidReq))
 	}
 
-	resp := models.LoginUser(seller.Email, seller.Password)
+	resp := models.LoginSeller(seller.Email, seller.Password)
 	u.Respond(w, resp)
 }

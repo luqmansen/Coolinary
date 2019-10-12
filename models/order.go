@@ -42,13 +42,26 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool){
 	}
 
 	product := &Product{}
-	err := GetDB().Debug().Select("price, seller_id").Table("products").Where("id = ?", order.ProductID).First(product).Error
+	err := GetDB().Debug().Select("product_name,price, seller_id").Table("products").Where("id = ?", order.ProductID).First(product).Error
 	if err != nil {
 		fmt.Println(err)
 		return u.Message(http.StatusNotFound, "Product Not Available"), false
 	}
-	price := product.Price
 
+	user := &User{}
+	err = GetDB().Debug().Select("address").Table("users").Where("id = ?", order.BuyerID).First(user).Error
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	if !GetDB().Debug().Select("seller_id,selling_area,product_name").Table("products").Where("selling_area  ILIKE '%' || ? || '%' AND product_name = ?", user.Address, product.ProductName).RecordNotFound(){
+		err := GetDB().Debug().Select("price, seller_id, selling_area, product_name").Table("products").Where("selling_area = ? AND product_name = ?", user.Address, product.ProductName).First(product).Error
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	price := product.Price
 	if order.Subscription == true{
 		order.TotalPrice = price * 30
 	} else {
