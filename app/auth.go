@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/luqmansen/hanako/models"
+	models2 "github.com/luqmansen/Coolinary/models"
 	"github.com/luqmansen/hanako/utils"
 	"net/http"
 	"os"
@@ -52,8 +52,7 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 		}
 
 		tokenPart := splitted[1]
-		tk := &models.Token{}
-
+		tk := &models2.Token{}
 		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("token_password")), nil
 		})

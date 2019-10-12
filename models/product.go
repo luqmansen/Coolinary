@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	u "github.com/luqmansen/hanako/utils"
+	u "github.com/luqmansen/Coolinary/utils"
 	"net/http"
 )
 

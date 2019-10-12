@@ -1,4 +1,4 @@
-package app
+package utils
 
 const (
 	DataNotFound    string = "Data Not Found"

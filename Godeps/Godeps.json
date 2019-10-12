@@ -54,14 +54,6 @@
 			"Rev": "931b5ae4c24e6810c8c82ab4734904de3df1c3dc"
 		},
 		{
-			"ImportPath": "github.com/luqmansen/hanako/models",
-			"Rev": "9b8c57f402a5018e3ad11d74108476214849349c"
-		},
-		{
-			"ImportPath": "github.com/luqmansen/hanako/utils",
-			"Rev": "9b8c57f402a5018e3ad11d74108476214849349c"
-		},
-		{
 			"ImportPath": "golang.org/x/crypto/bcrypt",
 			"Rev": "9756ffdc24725223350eb3266ffb92590d28f278"
 		},

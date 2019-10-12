@@ -3,8 +3,7 @@ package models
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
-	"github.com/luqmansen/Coolinary/app"
-	u "github.com/luqmansen/hanako/utils"
+	u "github.com/luqmansen/Coolinary/utils"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
@@ -39,7 +38,7 @@ func (user *User) ValidateUser() (map[string]interface{}, bool) {
 
 	err := GetDB().Table("users").Where("email = ?", user.Email).First(temp).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return u.Message(http.StatusInternalServerError, app.ConnectionError), false
+		return u.Message(http.StatusInternalServerError, u.ConnectionError), false
 	}
 	if temp.Email != "" {
 		return u.Message(http.StatusBadRequest, "Email address already in use by another user."), false
@@ -75,7 +74,7 @@ func (user *User) CreateUser() map[string]interface{} {
 
 	user.Password = ""
 
-	response := u.Message(http.StatusOK, "Account Has Been Created")
+	response := u.Message(http.StatusOK, "Account Created")
 	response["user"] = user
 	return response
 
@@ -87,9 +86,9 @@ func LoginUser(email, password string) map[string]interface{} {
 	err := GetDB().Table("users").Where("email = ?", email).First(user).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return u.Message(http.StatusNotFound, app.DataNotFound)
+			return u.Message(http.StatusNotFound, u.DataNotFound)
 		}
-		return u.Message(http.StatusInternalServerError, app.ConnectionError)
+		return u.Message(http.StatusInternalServerError, u.ConnectionError)
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
@@ -120,15 +119,3 @@ func GetUser(u uint) *User {
 	user.Password = ""
 	return user
 }
-
-//func PayOrder(id string) (map[string]interface{}, bool){
-//
-//}
-//
-//func SkipToday(date string) (map[string]interface{}, bool){
-//
-//}
-//
-//func CancelOrder(date string) (map[string]interface{}, bool){
-//
-//}

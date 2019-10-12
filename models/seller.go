@@ -3,8 +3,7 @@ package models
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
-	"github.com/luqmansen/Coolinary/app"
-	u "github.com/luqmansen/hanako/utils"
+	u "github.com/luqmansen/Coolinary/utils"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
@@ -39,7 +38,7 @@ func (seller *Seller) ValidateSeller() (map[string]interface{}, bool) {
 
 	err := GetDB().Table("sellers").Where("email = ?", seller.Email).First(temp).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return u.Message(http.StatusInternalServerError, app.ConnectionError), false
+		return u.Message(http.StatusInternalServerError, u.ConnectionError), false
 	}
 	if temp.Email != "" {
 		return u.Message(http.StatusBadRequest, "Email address already in use by another seller."), false
@@ -49,7 +48,7 @@ func (seller *Seller) ValidateSeller() (map[string]interface{}, bool) {
 
 	err2 := GetDB().Table("sellers").Where("store_name = ?", seller.StoreName).First(temp2).Error
 	if err2 != nil && err2 != gorm.ErrRecordNotFound {
-		return u.Message(http.StatusInternalServerError, app.ConnectionError), false
+		return u.Message(http.StatusInternalServerError, u.ConnectionError), false
 	}
 	if temp2.StoreName != "" {
 		return u.Message(http.StatusBadRequest, "Store Name already in use by another seller."), false
@@ -80,7 +79,7 @@ func (seller *Seller) CreateStore() map[string]interface{} {
 
 	seller.Password = ""
 
-	response := u.Message(http.StatusOK, "Account Has Been Created")
+	response := u.Message(http.StatusOK, "New Account Created")
 	response["seller"] = seller
 	return response
 
@@ -92,14 +91,14 @@ func LoginSeller(email, password string) map[string]interface{} {
 	err := GetDB().Table("sellers").Where("email = ?", email).First(seller).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return u.Message(http.StatusNotFound, app.DataNotFound)
+			return u.Message(http.StatusNotFound, u.DataNotFound)
 		}
-		return u.Message(http.StatusInternalServerError, app.ConnectionError)
+		return u.Message(http.StatusInternalServerError, u.ConnectionError)
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(seller.Password), []byte(password))
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
-		return u.Message(http.StatusForbidden, app.InvalidLogin)
+		return u.Message(http.StatusForbidden, u.InvalidLogin)
 	}
 
 	seller.Password = ""
@@ -125,7 +124,3 @@ func GetSeller(s uint) *Seller {
 	seller.Password = ""
 	return seller
 }
-
-//func AddProduct(name string, price string) (map[string]interface{}{
-//
-//}

@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	u "github.com/luqmansen/hanako/utils"
+	u "github.com/luqmansen/Coolinary/utils"
 	"net/http"
 	"time"
 )
@@ -54,12 +54,14 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool) {
 		fmt.Println(err)
 	}
 
+	//If same product name available with selling area same as user address, the product changed to nearest seller
 	if !GetDB().Debug().Select("seller_id,selling_area,product_name").Table("products").Where("selling_area  ILIKE '%' || ? || '%' AND product_name = ?", user.Address, product.ProductName).RecordNotFound() {
 		err := GetDB().Debug().Select("price, seller_id, selling_area, product_name").Table("products").Where("selling_area = ? AND product_name = ?", user.Address, product.ProductName).First(product).Error
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
+
 
 	price := product.Price
 	if order.Subscription == true {
@@ -70,6 +72,7 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool) {
 
 	order.SellerID = product.SellerID
 
+	//Determine if delivery should be today of next day
 	var now = time.Now()
 	if now.Hour() < TIME_BREAKFAST {
 		order.DeliveryTime = "08.00"
@@ -79,6 +82,7 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool) {
 		order.DeliverToday = true
 	} else {
 		order.DeliverToday = false
+		order.DeliveryTime = "08.00"
 	}
 
 	GetDB().Create(order)
@@ -174,6 +178,7 @@ func (order *Order) SkipToday(orderID uint) (map[string]interface{}, bool) {
 	order.SellerID = order.SellerID
 	order.TotalPrice = order.TotalPrice
 	order.Subscription = order.Subscription
+	order.DeliveryTime = order.DeliveryTime
 
 	t := time.Now().AddDate(0, 0, +1)
 	resp := u.Message(http.StatusOK, "Order will be sent at at "+t.String())

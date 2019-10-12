@@ -22,7 +22,7 @@ func main() {
 	api.HandleFunc("/user/login", controllers.AuthenticateUser).Methods("POST")
 	api.HandleFunc("/user/order/new", controllers.CreateOrder).Methods("POST")
 	api.HandleFunc("/user/order/pay/{id}", controllers.PayOrder).Methods("POST")
-	api.HandleFunc("/user/order/delete/{id}", controllers.CancelOrder).Methods("POST")
+	api.HandleFunc("/user/order/cancel/{id}", controllers.CancelOrder).Methods("POST")
 	api.HandleFunc("/user/order/skiptoday/{id}", controllers.SkipToday).Methods("POST")
 
 	//SELLER STUFF

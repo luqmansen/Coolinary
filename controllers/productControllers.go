@@ -3,7 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/luqmansen/Coolinary/models"
-	"github.com/luqmansen/hanako/utils"
+	"github.com/luqmansen/Coolinary/utils"
 	"net/http"
 )
 
