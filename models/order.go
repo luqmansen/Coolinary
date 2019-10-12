@@ -36,7 +36,6 @@ func (order *Order) ValidateOrder() (map[string]interface{}, bool) {
 
 func (order *Order) CreateOrder() (map[string]interface{}, bool){
 
-
 	if resp, ok := order.ValidateOrder(); !ok{
 		return  resp, false
 	}
@@ -71,6 +70,37 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool){
 	resp := u.Message(http.StatusOK, "Order Created")
 	resp["order"] = order
 	return resp, true
+}
+
+func (order *Order) PayOrder(orderID uint) (map[string]interface{}, bool){
+
+	//order := &Order{}
+	err := GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).First(order).Error
+	if err != nil {
+		fmt.Println(err)}
+	if order.Paid == true{
+		return u.Message(http.StatusOK, "Order Already Paid"), true
+	}
+
+
+	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
+		return u.Message(http.StatusNotFound, "Order Not Found"), false
+	}
+
+
+	err =  GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).Update("paid","true").Error
+	if err != nil {
+		fmt.Println(err)
+	}
+	order.ID = orderID
+	order.SellerID = order.SellerID
+	order.TotalPrice = order.TotalPrice
+	order.Subscription = order.Subscription
+
+	resp := u.Message(http.StatusOK, "Payment Success")
+	resp["order"] = order
+	return resp, true
+
 }
 
 

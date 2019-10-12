@@ -21,6 +21,7 @@ func main() {
 	api.HandleFunc("/user/new", controllers.CreateUserAccount).Methods("POST")
 	api.HandleFunc("/user/login", controllers.AuthenticateUser).Methods("POST")
 	api.HandleFunc("/user/order/new", controllers.CreateOrder).Methods("POST")
+	api.HandleFunc("/user/order/pay/{id}", controllers.PayOrder).Methods("POST")
 
 	//SELLER STUFF
 	api.HandleFunc("/seller/new", controllers.CreateSellerAccount).Methods("POST")

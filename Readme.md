@@ -98,7 +98,42 @@ Success Response Example
     },
     "status": 200
 }
+
 ```
+POST ``api/user/order/pay/{id}``
+
+Endpoints to user for creating new order
+
+Success Response Example
+
+```json
+{
+    "message": "Payment Success",
+    "order": {
+        "ID": 7,
+        "CreatedAt": "2019-10-12T08:53:24.276806+07:00",
+        "UpdatedAt": "2019-10-12T08:53:24.276806+07:00",
+        "DeletedAt": null,
+        "product_id": 1,
+        "SellerID": 0,
+        "buyer_id": 2,
+        "delivery_time": "13.00",
+        "subscription": false,
+        "total_price": 20000,
+        "paid": false
+    },
+    "status": 200
+}
+```
+
+Response Example if Order Already Paid
+```json
+{
+    "message": "Order Already Paid",
+    "status": 200
+}
+```
+
 ***
 ### Seller
 
