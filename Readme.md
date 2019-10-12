@@ -134,6 +134,38 @@ Response Example if Order Already Paid
 }
 ```
 
+POST ``api/user/order/delete/{id}``
+
+Endpoints to user for canceling the order
+
+Success Response Example
+```json
+{
+    "message": "Order Canceled",
+    "order": {
+        "ID": 11,
+        "CreatedAt": "2019-10-12T09:59:40.169588+07:00",
+        "UpdatedAt": "2019-10-12T09:59:40.169588+07:00",
+        "DeletedAt": "2019-10-12T09:59:46.250632443+07:00",
+        "product_id": 1,
+        "SellerID": 1,
+        "buyer_id": 2,
+        "delivery_time": "13.00",
+        "subscription": true,
+        "total_price": 600000,
+        "paid": false
+    },
+    "status": 200
+}
+```
+Response Example if Order Already Paid
+
+```json
+{
+    "message": "Order Already Paid, Can't Be Cancelled",
+    "status": 200
+}
+```
 ***
 ### Seller
 

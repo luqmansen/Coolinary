@@ -103,6 +103,39 @@ func (order *Order) PayOrder(orderID uint) (map[string]interface{}, bool){
 
 }
 
+func (order *Order) CancelOrder(orderID uint) (map[string]interface{}, bool){
+
+	//order := &Order{}
+	err := GetDB().Debug().Select("paid").Table("orders").Where("id = ?", orderID).First(order).Error
+	if err != nil {
+		fmt.Println(err)}
+	if order.Paid == true{
+		return u.Message(http.StatusOK, "Order Already Paid, Can't Be Cancelled"), true
+	}
+
+	if GetDB().Debug().Table("orders").Where("id = ?", orderID).First(order).RecordNotFound(){
+		return u.Message(http.StatusNotFound, "Order Not Found"), false
+	}
+
+	//This is soft delete, the vale "DeletedAt" will be set to current time
+	err =  GetDB().Debug().Table("orders").Where("id = ?", orderID).Delete(order).Error
+	if err != nil {
+		fmt.Println(err)
+	}
+	order.ID = orderID
+	order.SellerID = order.SellerID
+	order.TotalPrice = order.TotalPrice
+	order.Subscription = order.Subscription
+
+	now := time.Now()
+	order.DeletedAt = &now
+
+	resp := u.Message(http.StatusOK, "Order Canceled")
+	resp["order"] = order
+	return resp, true
+
+}
+
 
 
 
