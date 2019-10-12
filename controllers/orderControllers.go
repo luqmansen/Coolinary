@@ -11,7 +11,7 @@ import (
 
 var CreateOrder = func(w http.ResponseWriter, r *http.Request) {
 
-	userID := r.Context().Value("user").(uint)  //Grab the Id of order creator
+	userID := r.Context().Value("user").(uint) //Grab the Id of order creator
 	order := &models.Order{}
 
 	err := json.NewDecoder(r.Body).Decode(order)
@@ -31,7 +31,7 @@ var PayOrder = func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 
-	userID := r.Context().Value("user").(uint)  //Grab the Id of order creator
+	userID := r.Context().Value("user").(uint) //Grab the Id of order creator
 	order := &models.Order{}
 
 	err = json.NewDecoder(r.Body).Decode(order)
@@ -51,7 +51,7 @@ var CancelOrder = func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 
-	userID := r.Context().Value("user").(uint)  //Grab the Id of order creator
+	userID := r.Context().Value("user").(uint) //Grab the Id of order creator
 	order := &models.Order{}
 
 	err = json.NewDecoder(r.Body).Decode(order)
@@ -71,7 +71,7 @@ var SkipToday = func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 
-	userID := r.Context().Value("user").(uint)  //Grab the Id of order creator
+	userID := r.Context().Value("user").(uint) //Grab the Id of order creator
 	order := &models.Order{}
 
 	err = json.NewDecoder(r.Body).Decode(order)

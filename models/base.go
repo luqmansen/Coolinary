@@ -31,10 +31,7 @@ func init() {
 
 	db = conn
 	db.Debug().AutoMigrate(&Seller{}, &User{}, &Product{}, &Order{})
-	//db.Model(&Product{}).AddForeignKey("seller_id", "sellers(id)", "RESTRICT", "RESTRICT")
-	//db.Model(&Order{}).AddForeignKey("seller_id", "sellers(id)", "RESTRICT", "RESTRICT")
-	//db.Model(&Order{}).AddForeignKey("buyer_id", "users(id)", "RESTRICT", "RESTRICT")
-	//db.Model(&Order{}).AddForeignKey("product_id", "products(id)", "RESTRICT", "RESTRICT")
+
 }
 
 func GetDB() *gorm.DB {

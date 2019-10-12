@@ -30,7 +30,6 @@ func main() {
 	api.HandleFunc("/seller/login", controllers.AuthenticateSeller).Methods("POST")
 	api.HandleFunc("/seller/product/new", controllers.CreateProduct).Methods("POST")
 
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"

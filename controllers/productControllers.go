@@ -20,7 +20,7 @@ var CreateProduct = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	product.SellerID = seller
-	resp,_ := product.CreateProduct()
-	utils.Respond(w,resp)
+	resp, _ := product.CreateProduct()
+	utils.Respond(w, resp)
 
 }
