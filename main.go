@@ -20,7 +20,7 @@ func main() {
 	//USER STUFF
 	api.HandleFunc("/user/new", controllers.CreateUserAccount).Methods("POST")
 	api.HandleFunc("/user/login", controllers.AuthenticateUser).Methods("POST")
-	api.HandleFunc("/user/order", controllers.CreateOrder).Methods("POST")
+	api.HandleFunc("/user/order/new", controllers.CreateOrder).Methods("POST")
 
 	//SELLER STUFF
 	api.HandleFunc("/seller/new", controllers.CreateSellerAccount).Methods("POST")

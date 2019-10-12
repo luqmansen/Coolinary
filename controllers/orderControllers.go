@@ -9,7 +9,7 @@ import (
 
 var CreateOrder = func(w http.ResponseWriter, r *http.Request) {
 
-	userID := r.Context().Value("user").(uint)
+	userID := r.Context().Value("user").(uint)  //Grab the Id of order creator
 	order := &models.Order{}
 
 	err := json.NewDecoder(r.Body).Decode(order)
@@ -19,7 +19,7 @@ var CreateOrder = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	order.BuyerID = userID
-	resp, _ := order.CreateOrder(userID)
+	resp, _ := order.CreateOrder()
 	utils.Respond(w, resp)
 
 }

@@ -67,6 +67,38 @@ Success Response Example
     "status": 200
 }
 ```
+POST ``api/user/order/new``
+
+Endpoints to user for creating new order
+
+Post parameters
+
+| Property | Type | Description |
+| --- | --- | --- |
+| product_id | int | ID of selected product  |
+| subscription | bool | Subscription type (optional)  |
+
+
+Success Response Example
+```json
+{
+    "message": "Order Created",
+    "order": {
+        "ID": 9,
+        "CreatedAt": "2019-10-12T08:56:41.056108096+07:00",
+        "UpdatedAt": "2019-10-12T08:56:41.056108096+07:00",
+        "DeletedAt": null,
+        "product_id": 1,
+        "SellerID": 1,
+        "buyer_id": 2,
+        "delivery_time": "13.00",
+        "subscription": true,
+        "total_price": 600000,
+        "paid": false
+    },
+    "status": 200
+}
+```
 ***
 ### Seller
 
@@ -165,3 +197,4 @@ Success Response Example
     "status": 200
 }
 ```
+
