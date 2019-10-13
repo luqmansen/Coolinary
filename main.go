@@ -12,6 +12,10 @@ import (
 func main() {
 
 	r := mux.NewRouter()
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w,"<h1>Hello there, go try out some stuff here!</h1>")
+	})
+
 
 	api := r.PathPrefix("/api").Subrouter()
 
