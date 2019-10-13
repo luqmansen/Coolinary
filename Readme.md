@@ -112,6 +112,12 @@ Success Response Example
 ### User Pay The Order
 **POST** ``api/user/order/pay/{id}``
 
+path variable
+
+| Type | Description |
+| --- | --- |
+ int | Order ID  |
+
 Success Response Example
 
 ```json
@@ -143,6 +149,12 @@ Response Example if Order Already Paid
 ```
 ### User Cancel The Order
 **POST** ``api/user/order/cancel/{id}``
+
+path variable
+
+| Type | Description |
+| --- | --- |
+ int | Order ID  |
 
 Note : Paid order can't be canceled
 
@@ -177,7 +189,13 @@ Response Example if Order Already Paid
 ### User Skip Order Delivery
 POST ``api/user/order/skiptoday/{id}``
 
-Note : Order should've been paid if user want to skip the delivery
+path variable
+
+| Type | Description |
+| --- | --- |
+ int | Order ID  |
+
+Note : Order can't be skipped if buyer has not paid
 
 Success Response Example
 ```json
