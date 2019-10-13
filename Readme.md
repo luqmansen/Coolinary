@@ -1,12 +1,24 @@
 # Coolinary REST API
 
-## Request
+## Table of Content
+- [Coolinary REST API](#coolinary-rest-api)
+  * [Table of Content](#table-of-content)
+  * [User](#user)
+    + [Create New User](#create-new-user)
+    + [User Login](#user-login)
+    + [User Create New Order](#user-create-new-order)
+    + [User Pay The Order](#user-pay-the-order)
+    + [User Cancel The Order](#user-cancel-the-order)
+    + [User Skip Order Delivery](#user-skip-order-delivery)
+  * [Seller](#seller)
+    + [Create New Seller Account](#create-new-seller-account)
+    + [Seller Login](#seller-login)
+    + [Seller Create New Product](#seller-create-new-product)
 
-### User
+## User
+### Create New User
 
-POST ``api/user/new``
-
-Endpoints to create new user
+**POST** ``api/user/new`` 
 
 Post parameters
 
@@ -37,9 +49,8 @@ Success Response Example
 }
 ```
 
-POST ``api/user/login``
-
-Endpoints to login for user
+### User Login
+**POST** ``api/user/login``
 
 Post parameters
 
@@ -67,9 +78,8 @@ Success Response Example
     "status": 200
 }
 ```
-POST ``api/user/order/new``
-
-Endpoints to user for creating new order
+### User Create New Order
+**POST** ``api/user/order/new`` 
 
 Post parameters
 
@@ -98,11 +108,9 @@ Success Response Example
     },
     "status": 200
 }
-
 ```
-POST ``api/user/order/pay/{id}``
-
-Endpoints to user for creating new order
+### User Pay The Order
+**POST** ``api/user/order/pay/{id}``
 
 Success Response Example
 
@@ -133,10 +141,10 @@ Response Example if Order Already Paid
     "status": 200
 }
 ```
+### User Cancel The Order
+**POST** ``api/user/order/cancel/{id}``
 
-POST ``api/user/order/delete/{id}``
-
-Endpoints to user for canceling the order
+Note : Paid order can't be canceled
 
 Success Response Example
 ```json
@@ -166,10 +174,10 @@ Response Example if Order Already Paid
     "status": 200
 }
 ```
+### User Skip Order Delivery
+POST ``api/user/order/skiptoday/{id}``
 
-POST ``api/user/order/delete/{id}``
-
-Endpoints to user for skip the order delivery for today
+Note : Order should've been paid if user want to skip the delivery
 
 Success Response Example
 ```json
@@ -193,11 +201,9 @@ Success Response Example
 }
 ```
 ***
-### Seller
-
-POST ``api/user/new``
-
-Endpoints to create new seller
+## Seller
+### Create New Seller Account
+**POST** ``api/user/new``
 
 Post parameters
 
@@ -228,10 +234,8 @@ Success Response Example
     "status": 200
 }
 ```
-
+### Seller Login
 POST ``api/seller/login``
-
-Endpoints to login for seller
 
 Post parameters
 
@@ -259,10 +263,8 @@ Success Response Example
 }
 ```
 
-
+### Seller Create New Product
 POST ``api/seller/product/new``
-
-Endpoints to create new product for seller
 
 Post parameters
 
