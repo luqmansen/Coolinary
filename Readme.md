@@ -221,7 +221,7 @@ Success Response Example
 ***
 ## Seller
 ### Create New Seller Account
-**POST** ``api/user/new``
+**POST** ``api/seller/new``
 
 Post parameters
 
