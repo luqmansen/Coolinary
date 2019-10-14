@@ -3,6 +3,8 @@
 ## Table of Content
 - [Coolinary REST API](#coolinary-rest-api)
   * [Table of Content](#table-of-content)
+  * [Product](#product)
+    + [Show All Product](#show-all-product)
   * [User](#user)
     + [Create New User](#create-new-user)
     + [User Login](#user-login)
@@ -14,6 +16,38 @@
     + [Create New Seller Account](#create-new-seller-account)
     + [Seller Login](#seller-login)
     + [Seller Create New Product](#seller-create-new-product)
+
+## Product
+### Show All Product
+
+**GET** ``api/product/`` <br>
+**GET** ``api/product?show=10`` (optional)
+
+ 
+
+
+The default is showing 20 results
+
+Success response example
+```json
+{
+    "data": [
+        {
+            "ID": 1,
+            "CreatedAt": "2019-10-12T14:21:04.370018+07:00",
+            "UpdatedAt": "2019-10-12T14:21:04.370018+07:00",
+            "DeletedAt": null,
+            "product_name": "Gudeg Jogja",
+            "seller_id": 1,
+            "price": 20000,
+            "selling_area": "Magelang"
+        }
+    ],
+    "message": "Success",
+    "status": 200
+}
+``` 
+
 
 ## User
 ### Create New User
