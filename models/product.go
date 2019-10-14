@@ -1,9 +1,11 @@
 package models
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	u "github.com/luqmansen/Coolinary/utils"
 	"net/http"
+	"strconv"
 )
 
 type Product struct {
@@ -42,5 +44,23 @@ func (product *Product) CreateProduct() (map[string]interface{}, bool) {
 	resp := u.Message(http.StatusOK, "New Product Added")
 	resp["product"] = product
 	return resp, true
+
+}
+
+func GetAllProduct(number string) ([]*Product, bool){
+
+	if number == "" {
+		number = "20"
+	} else if _, err := strconv.Atoi(number); err != nil {
+		number = "20"
+	}
+
+	product := make([]*Product, 0)
+	err := GetDB().Limit(number).Find(&product).Error
+	if err != nil {
+		fmt.Println(err)
+		return nil, false
+	}
+	return product, true
 
 }

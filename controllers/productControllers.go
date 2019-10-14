@@ -3,7 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/luqmansen/Coolinary/models"
-	"github.com/luqmansen/Coolinary/utils"
+	u "github.com/luqmansen/Coolinary/utils"
+	"github.com/luqmansen/hanako/utils"
 	"net/http"
 )
 
@@ -15,7 +16,7 @@ var CreateProduct = func(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(product)
 	if err != nil {
-		utils.Respond(w, utils.Message(http.StatusInternalServerError, "Error while requesting body"))
+		utils.Respond(w, u.Message(http.StatusInternalServerError, "Error while requesting body"))
 		return
 	}
 
@@ -23,4 +24,18 @@ var CreateProduct = func(w http.ResponseWriter, r *http.Request) {
 	resp, _ := product.CreateProduct()
 	utils.Respond(w, resp)
 
+}
+
+var GetAllProduct = func(w http.ResponseWriter, r *http.Request) {
+
+	show := r.URL.Query().Get("show")
+
+	data,_ := models.GetAllProduct(show)
+	if data == nil {
+		u.Respond(w, u.Message(http.StatusNoContent, "Not Found"))
+	} else {
+		resp := u.Message(http.StatusOK, "Success")
+		resp["data"] = data
+		u.Respond(w, resp)
+	}
 }
