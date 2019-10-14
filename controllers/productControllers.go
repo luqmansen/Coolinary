@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/luqmansen/Coolinary/models"
 	u "github.com/luqmansen/Coolinary/utils"
-	"github.com/luqmansen/hanako/utils"
 	"net/http"
 )
 
@@ -16,13 +15,13 @@ var CreateProduct = func(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(product)
 	if err != nil {
-		utils.Respond(w, u.Message(http.StatusInternalServerError, "Error while requesting body"))
+		u.Respond(w, u.Message(http.StatusInternalServerError, "Error while requesting body"))
 		return
 	}
 
 	product.SellerID = seller
 	resp, _ := product.CreateProduct()
-	utils.Respond(w, resp)
+	u.Respond(w, resp)
 
 }
 
