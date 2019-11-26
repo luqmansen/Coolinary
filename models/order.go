@@ -63,12 +63,12 @@ func (order *Order) CreateOrder() (map[string]interface{}, bool) {
 	}
 
 
-	price := product.Price
-	if order.Subscription == true {
-		order.TotalPrice = price * 30
-	} else {
-		order.TotalPrice = price
-	}
+	//price := product.Price
+	//if order.Subscription == true {
+	//	order.TotalPrice = price * 30
+	//} else {
+	//	order.TotalPrice = price
+	//}
 
 	order.SellerID = product.SellerID
 

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/luqmansen/Coolinary/models"
 	u "github.com/luqmansen/Coolinary/utils"
@@ -10,19 +9,31 @@ import (
 
 var CreateProduct = func(w http.ResponseWriter, r *http.Request) {
 
-	seller := r.Context().Value("user").(uint) //Grab the Id of seller creator
+	//seller := r.Context().Value("user").(uint) //Grab the Id of seller creator
 
-	product := &models.Product{}
-
-	err := json.NewDecoder(r.Body).Decode(product)
+	err := r.ParseForm()
 	if err != nil {
 		u.Respond(w, u.Message(http.StatusInternalServerError, "Error while requesting body"))
 		fmt.Println(err)
 		return
 	}
 
-	product.SellerID = seller
-	resp, _ := product.CreateProduct()
+	data := models.Product{}
+
+	data.ProductName = r.Form.Get("nama")
+	data.Price = (r.Form.Get("harga"))
+	data.SellingArea = r.Form.Get("stok")
+
+
+	//err := json.NewDecoder(r.Body).Decode(product)
+	//if err != nil {
+	//	u.Respond(w, u.Message(http.StatusInternalServerError, "Error while requesting body"))
+	//	fmt.Println(err)
+	//	return
+	//}
+
+	//data.SellerID = seller
+	resp, _ := data.CreateProduct()
 	u.Respond(w, resp)
 
 }

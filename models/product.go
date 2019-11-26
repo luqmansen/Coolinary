@@ -11,9 +11,9 @@ import (
 type Product struct {
 	gorm.Model
 	ProductName string `json:"nama"`
-	SellerID    uint   `json:"harga	"`
-	Price       uint32 `json:"stok"`
-	SellingArea string `json:"selling_area"`
+	SellerID    uint   `json:"seller_id	"`
+	Price       string `json:"harga"`
+	SellingArea string `json:"stok"`
 }
 
 func (product *Product) ValidateProduct() (map[string]interface{}, bool) {
@@ -22,7 +22,7 @@ func (product *Product) ValidateProduct() (map[string]interface{}, bool) {
 		return u.Message(http.StatusBadRequest, "Name can't be empty"), false
 	}
 
-	if product.Price <= 0 {
+	if product.Price <= "" {
 		return u.Message(http.StatusBadRequest, "Price Must Be Set"), false
 	}
 
@@ -35,9 +35,9 @@ func (product *Product) ValidateProduct() (map[string]interface{}, bool) {
 
 func (product *Product) CreateProduct() (map[string]interface{}, bool) {
 
-	if resp, ok := product.ValidateProduct(); !ok {
-		return resp, false
-	}
+	//if resp, ok := product.ValidateProduct(); !ok {
+	//	return resp, false
+	//}
 
 	GetDB().Create(product)
 
