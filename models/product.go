@@ -11,9 +11,9 @@ import (
 type Product struct {
 	gorm.Model
 	ProductName string `json:"nama"`
-	SellerID    uint   `json:"seller_id"`
+	SellerID    uint   `json:"harga	"`
 	Price       uint32 `json:"stok"`
-	SellingArea string `json:"harga"`
+	SellingArea string `json:"selling_area"`
 }
 
 func (product *Product) ValidateProduct() (map[string]interface{}, bool) {
