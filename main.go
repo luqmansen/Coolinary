@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/luqmansen/Coolinary/app"
 	"github.com/luqmansen/Coolinary/controllers"
 	"net/http"
 	"os"
@@ -19,7 +18,7 @@ func main() {
 
 	api := r.PathPrefix("/api").Subrouter()
 
-	api.Use(app.JwtAuthentication)
+	//api.Use(app.JwtAuthentication)
 
 	//PRODUCT
 	api.Path("/Food").Queries("show", "{show}").HandlerFunc(controllers.GetAllProduct).Methods("GET")
