@@ -22,8 +22,8 @@ func main() {
 	api.Use(app.JwtAuthentication)
 
 	//PRODUCT
-	api.Path("/product").Queries("show", "{show}").HandlerFunc(controllers.GetAllProduct).Methods("GET")
-	api.Path("/product").HandlerFunc(controllers.GetAllProduct).Methods("GET")
+	api.Path("/Food").Queries("show", "{show}").HandlerFunc(controllers.GetAllProduct).Methods("GET")
+	api.Path("/Food").HandlerFunc(controllers.GetAllProduct).Methods("GET")
 
 	//USER STUFF
 	api.HandleFunc("/user/new", controllers.CreateUserAccount).Methods("POST")

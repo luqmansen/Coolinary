@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/luqmansen/Coolinary/models"
 	u "github.com/luqmansen/Coolinary/utils"
 	"net/http"
@@ -16,6 +17,7 @@ var CreateProduct = func(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(product)
 	if err != nil {
 		u.Respond(w, u.Message(http.StatusInternalServerError, "Error while requesting body"))
+		fmt.Println(err)
 		return
 	}
 
